@@ -127,3 +127,8 @@ document.addEventListener('keydown',e=>{
   options[position]?.focus();
  }
 });
+
+$('#helpButton').onclick=()=>$('#helpDialog').showModal();
+const onlineClassroom=['http:','https:'].includes(location.protocol)&&!['localhost','127.0.0.1','::1'].includes(location.hostname);
+$('#connectionStatus').textContent=onlineClassroom?'● 온라인 교실':'● 이 기기에서 이용 중';
+$('#connectionStatus').title=onlineClassroom?'이 주소를 즐겨찾기하세요. 업데이트 후 새로고침하면 최신 기능을 사용할 수 있습니다.':'오프라인 파일 또는 개발용 서버에서 이용 중입니다.';

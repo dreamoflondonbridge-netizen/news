@@ -1,6 +1,20 @@
 # 우리학교 NEWS
 중학교 2학년 국어 수업용 복합양식 기사 학습 사이트.
 
+## 고정 주소로 접속하기
+Pages 활성화 후 접속 주소: **https://dreamoflondonbridge-netizen.github.io/news/**
+
+저장소 소유자가 GitHub에서 최초 한 번 설정합니다.
+
+1. [Pages 설정](https://github.com/dreamoflondonbridge-netizen/news/settings/pages)을 엽니다.
+2. Build and deployment의 Source를 **Deploy from a branch**로 선택합니다.
+3. Branch를 **main**, 폴더를 **/(root)**로 고르고 **Save**를 누릅니다.
+4. GitHub 배포 완료 후 위 주소로 접속합니다. 배포 결과는 저장소 Actions에서 확인할 수 있습니다.
+
+이후 main 브랜치에 수정 사항을 올리면 GitHub Pages가 자동 갱신됩니다. 사이트 파일을 매번 내려받지 않아도 됩니다. 최신 화면이 보이지 않으면 Ctrl+Shift+R(Mac: ⌘+Shift+R)로 새로고침하세요. `.nojekyll`을 포함하여 별도 Jekyll 빌드 없이 정적 파일을 제공합니다.
+
+편집한 기사 내용은 기기·브라우저별로 저장됩니다. 사이트 코드 업데이트와 기사 공동 저장은 별개이며, 다른 기기에는 JSON 내보내기/가져오기로 옮겨야 합니다. 모든 학생에게 편집 내용이 자동 전파되지는 않습니다.
+
 ## 클릭해서 바로 내려받기
 **[실행용 ZIP 다운로드](https://github.com/dreamoflondonbridge-netizen/news/raw/refs/heads/main/news-explorer.zip)**
 
