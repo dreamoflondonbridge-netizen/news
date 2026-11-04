@@ -1,5 +1,6 @@
 import {readFile,writeFile} from 'node:fs/promises';
 import {initial} from '../data.js';
+import {writeLaunchZip} from './package.mjs';
 const root=new URL('../',import.meta.url);
 const read=p=>readFile(new URL(p,root),'utf8');
 const pack=async p=>{const mime=p.endsWith('.svg')?'image/svg+xml':p.endsWith('.jpg')?'image/jpeg':'image/png';return 'data:'+mime+';base64,'+(await readFile(new URL(p,root))).toString('base64');};
@@ -15,3 +16,6 @@ const inlineScript=s=>s.replace(/<\/script/gi,'<\\/script');
 html=html.replace('<link rel="stylesheet" href="style.css">',()=>`<style>${css}</style>`).replace('<script type="module" src="app.js"></script>',()=>`<script id="embeddedAssets" type="application/json">${json(assets)}</script><script id="embeddedArticle" type="application/json" data-storage-key="school-news-offline-v1">${json(initial)}</script><script>${inlineScript(`(()=>{\n${model}\n${app}\n})();`)}</script>`);
 await writeFile(new URL('school-news.html',root),html);
 console.log('Created school-news.html — double-click to open, no server required.');
+
+await writeLaunchZip(root);
+console.log('Created news-explorer.zip — extract and open index.html.');
