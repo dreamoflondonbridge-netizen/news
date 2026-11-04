@@ -3,8 +3,12 @@ import {initial} from '../data.js';
 import {writeLaunchZip} from './package.mjs';
 const root=new URL('../',import.meta.url);
 const read=p=>readFile(new URL(p,root),'utf8');
-const pack=async p=>{const mime=p.endsWith('.svg')?'image/svg+xml':p.endsWith('.jpg')?'image/jpeg':'image/png';return 'data:'+mime+';base64,'+(await readFile(new URL(p,root))).toString('base64');};
+const pack=async p=>{const mime=p.endsWith('.svg')?'image/svg+xml':p.endsWith('.jpg')?'image/jpeg':p.endsWith('.woff2')?'font/woff2':'image/png';return 'data:'+mime+';base64,'+(await readFile(new URL(p,root))).toString('base64');};
 let [html,css,model,app]=await Promise.all(['index.html','style.css','data.js','app.js'].map(read));
+css+='\n'+await read('cozy.css');
+for(const match of [...css.matchAll(/url\(['"]?(assets\/fonts\/[^'")]+)['"]?\)/g)])css=css.replaceAll(match[0],'url("'+await pack(match[1])+'")');
+for(const license of ['Jua-OFL.txt','GowunDodum-OFL.txt'])css+='\n/* '+(await read('assets/fonts/'+license)).replaceAll('*/','* /')+' */';
+html=html.replace('<link rel="stylesheet" href="cozy.css">','');
 for(const match of [...html.matchAll(/src="(assets\/[^"]+)"/g)])html=html.replaceAll(match[0],'src="'+await pack(match[1])+'"');
 // Store repeated article images once; the runtime resolves local asset references.
 const assets={};

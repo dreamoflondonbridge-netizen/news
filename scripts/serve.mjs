@@ -5,7 +5,7 @@ import {resolve,extname,sep} from 'node:path';
 import {spawn} from 'node:child_process';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const port=Number(process.env.PORT||3000);
-const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.json':'application/json'};
+const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.woff2':'font/woff2','.svg':'image/svg+xml','.json':'application/json'};
 const server=createServer(async(req,res)=>{try{const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);const file=resolve(root,'.'+(pathname==='/'?'/index.html':pathname));if(!file.startsWith(root.endsWith(sep)?root:root+sep)||pathname.split('/').some(p=>p.startsWith('.'))){res.writeHead(403);res.end('Forbidden');return;}if(!(await stat(file)).isFile())throw Error();res.writeHead(200,{'Content-Type':mime[extname(file)]||'application/octet-stream','X-Content-Type-Options':'nosniff'});res.end(await readFile(file));}catch{res.writeHead(404);res.end('Not found');}});
 server.on('error',e=>{console.error(e.code==='EADDRINUSE'?`Port ${port} is in use. Try PORT=3001 npm start.`:e.message);process.exitCode=1;});
 server.listen(port,'0.0.0.0',()=>{const url=`http://localhost:${port}`;console.log(`우리학교 NEWS: ${url}\nStop: Ctrl+C\nNo installation needed: double-click school-news.html`);if(process.argv.includes('--open')){const cmd=process.platform==='win32'?'cmd':process.platform==='darwin'?'open':'xdg-open';const args=process.platform==='win32'?['/c','start','',url]:[url];const child=spawn(cmd,args,{stdio:'ignore'});child.on('error',()=>{});child.unref();}});
