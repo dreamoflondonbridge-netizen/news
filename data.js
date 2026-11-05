@@ -8,7 +8,7 @@ export const initial={version:1,blocks:[
 {id:'body-a',type:'paragraph',text:'윷놀이는 네 개의 윷가락을 던져 나온 결과에 따라 말을 움직이는 우리나라의 전통 놀이이다. 도는 한 칸, 개는 두 칸, 걸은 세 칸, 윷은 네 칸, 모는 다섯 칸을 움직인다. 윷이나 모가 나오면 한 번 더 던질 수 있어 마지막까지 결과를 예측하기 어렵다.'},
 {id:'rules',type:'illustration',src:'assets/rules.svg',caption:'도·개·걸·윷·모에 따라 말을 움직이는 칸 수가 달라진다.',source:'우리학교 NEWS · 학습용 도식',alt:'도 한 칸, 개 두 칸, 걸 세 칸, 윷 네 칸, 모 다섯 칸을 비교한 그림'},
 {id:'body-b',type:'paragraph',text:'단순히 운으로만 승부가 정해지는 것은 아니다. 어떤 말을 먼저 움직일지, 지름길을 택할지, 여러 말을 함께 업고 갈지 팀원들과 의견을 나눠야 한다. 학생들은 서로 다른 생각을 조율하며 협력의 의미를 자연스럽게 배웠다.'},
-{id:'photo-b',type:'photo',src:'assets/yut-scene.png',caption:'말을 어디로 옮길까? 윷판을 함께 보며 다음 수를 의논한다.',source:'AI 생성 예시 이미지 · 앞의 장면에서 윷판 부분을 확대해 제시합니다.',alt:'윷판과 말의 위치를 함께 살펴보는 모습'},
+{id:'photo-b',type:'photo',src:'assets/yut-scene.png',caption:'말을 어디로 옮길까? 윷판을 함께 보며 다음 수를 의논한다.',source:'AI 생성 예시 이미지 · 같은 장면을 다른 본문과 연결해 제시합니다.',alt:'윷판과 말의 위치를 함께 살펴보는 모습'},
 {id:'body-c',type:'paragraph',text:'체험에 참여한 김하늘 학생은 “친구들과 작전을 짜면서 더 가까워진 것 같아요. 다음 명절에는 가족들과도 해 보고 싶어요.”라고 말했다. 네 개의 작은 윷가락은 과거와 오늘을 잇고, 사람과 사람을 이어 주고 있었다.'},
 {id:'video-a',type:'video',src:'',caption:'움직임으로 살펴보는 윷 던지기와 말 옮기기',source:'교사가 보유한 영상 파일 또는 직접 재생 가능한 영상 URL을 편집에서 등록해 주세요.'}
 ],lessons:{
