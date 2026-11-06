@@ -4,3 +4,12 @@ import {initial,buildSteps,validate,mediaTypes} from '../data.js';
 test('media lessons follow article order including repeated types',()=>{const d=structuredClone(initial);const expected=d.blocks.filter(b=>mediaTypes.includes(b.type)).map(b=>b.id);assert.deepEqual(buildSteps(d).filter(s=>expected.includes(s.id)).map(s=>s.id),expected);const a=d.blocks.findIndex(b=>b.id==='photo-a'),b=d.blocks.findIndex(b=>b.id==='photo-b');[d.blocks[a],d.blocks[b]]=[d.blocks[b],d.blocks[a]];assert.equal(buildSteps(d).filter(s=>expected.includes(s.id))[0].id,'photo-b');assert.notEqual(d.lessons['photo-a'].effect,d.lessons['photo-b'].effect)});
 test('adding and removing arbitrary media updates generated lessons',()=>{const d=structuredClone(initial);d.blocks.splice(3,0,{id:'graph',type:'other',src:'graph.svg'});assert.equal(buildSteps(d).filter(s=>s.id==='graph').length,1);d.blocks=d.blocks.filter(b=>b.id!=='rules');assert.equal(buildSteps(d).filter(s=>s.id==='rules').length,0)});
 test('JSON validation rejects duplicate IDs and invalid lesson references',()=>{assert.doesNotThrow(()=>validate(JSON.parse(JSON.stringify(initial))));const d=structuredClone(initial);d.blocks.push(d.blocks[0]);assert.throws(()=>validate(d));const e=structuredClone(initial);e.lessons.title.relatedIds='lead';assert.throws(()=>validate(e));});
+
+test('reading lessons interleave text and media in actual article order',()=>{
+ const d=structuredClone(initial);
+ d.blocks.splice(4,0,{id:'new-drawing',type:'illustration',src:'drawing.svg',caption:'새 그림'});
+ const ids=buildSteps(d).filter(s=>s.kind==='block').map(s=>s.id);
+ assert.deepEqual(ids,d.blocks.filter(b=>mediaTypes.includes(b.type)||d.lessons[b.id]).map(b=>b.id));
+ assert.ok(ids.indexOf('photo-a')<ids.indexOf('body-a'));
+ assert.ok(ids.includes('new-drawing'),'media without prewritten lessons must still have a reading step');
+});
