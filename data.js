@@ -60,3 +60,17 @@ function validateHighlights(highlights){
   for(const range of entry.ranges){if(!range||!Number.isInteger(range.start)||!Number.isInteger(range.end)||range.start<end||range.start<0||range.end<=range.start||range.end>entry.text.length||!highlightColors.includes(range.color))throw Error('형광펜 색상 또는 위치가 올바르지 않습니다.');end=range.end;}
  }
 }
+
+export function buildLearningSteps(article){
+ let material=0;const steps=[{kind:'intro',name:'기사 탐험 시작'}];
+ for(const block of article.blocks){
+  const media=mediaTypes.includes(block.type),quiz=quizReady(article.quizzes?.[block.id]);
+  if(!media&&!article.lessons[block.id]&&!quiz)continue;
+  const name=media?`자료 ${++material} · ${labels[block.type]}`:labels[block.type];
+  steps.push({kind:'block',id:block.id,name:`설명 · ${name}`});
+  if(quiz)steps.push({kind:'quiz',id:block.id,name:`퀴즈 · ${name}`});
+ }
+ steps.push({kind:'summary',name:'자료별 효과 정리'},{kind:'concept',name:'개념과 학습 마무리'});
+ if(steps.some(step=>step.kind==='quiz'))steps.push({kind:'quiz-summary',name:'퀴즈 돌아보기'});
+ return steps;
+}
