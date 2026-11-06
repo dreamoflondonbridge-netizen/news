@@ -75,7 +75,7 @@ async function downloadHtml(doc){
 function renderJourney(){
  const percent=Math.round(index/Math.max(1,currentSteps().length-1)*100);
  $('#journeyPercent').textContent=percent+'%';$('#journeyFill').style.width=percent+'%';
- $('.journey-track').setAttribute('aria-valuenow',String(percent));$('.journey-label').textContent='학습 진행';
+ $('.journey-track').setAttribute('aria-valuenow',String(percent));$('.journey-label').textContent='학습 진행률';
  document.querySelectorAll('nav [data-nav]').forEach(b=>b.classList.toggle('selected',b.dataset.nav===activeNav));
 }
 function jumpToBlock(id){const block=[...document.querySelectorAll('#article [data-id]')].find(b=>b.dataset.id===id);block?.scrollIntoView({behavior:'smooth',block:'center'});}
@@ -398,3 +398,12 @@ document.addEventListener('click',e=>{
   if(field){field.closest('details').open=true;field.closest('.editor-block').scrollIntoView({behavior:'smooth',block:'start'});field.focus({preventScroll:true});}
  }
 });
+
+function syncLessonHeaderHeight(){
+ const header=document.querySelector('.lesson-header');if(!header)return;
+ const height=Math.ceil(header.getBoundingClientRect().height)+'px';
+ if(document.documentElement.style.getPropertyValue('--lesson-header-height')!==height){document.documentElement.style.setProperty('--lesson-header-height',height);applyArticleScale();}
+}
+const lessonHeaderObserver=new ResizeObserver(syncLessonHeaderHeight);
+lessonHeaderObserver.observe(document.querySelector('.lesson-header'));
+syncLessonHeaderHeight();
